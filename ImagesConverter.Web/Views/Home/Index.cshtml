@@ -9,10 +9,12 @@
     <meta name="viewport" content="width=device-width" />
     <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
     <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
-    <title>Images App</title>
+    <title>Images Converter</title>
 </head>
 <body>
     <div id="content"></div>
-    <script src="@Url.Content("~/Scripts/Index.jsx")"></script>
+    <script src="@Url.Content("~/Scripts/bundle.js")"></script>
+    <script src="@Url.Content("~/Scripts/external/tiff.min.js")"></script>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Scripts/Styles/styles.css")"></link>
 </body>
 </html>
