@@ -1,5 +1,15 @@
 ﻿import "whatwg-fetch";
 
+export function getAllConvertedImages() {
+    return fetch('/api/images')
+    .then(function(response) {
+        return response.json()
+    })
+    .catch(function(error) {
+        console.log('error', error)
+    })
+}
+
 export function handleUploadImages(images) {
     let data = new FormData();
 

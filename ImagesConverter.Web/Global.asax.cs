@@ -9,7 +9,7 @@ namespace ImagesConverter.Web
     {
         protected void Application_Start()
         {
-            TestDataFactory.Fill();
+            //TestDataFactory.Fill();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }

@@ -224,8 +224,11 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\components\App.js" />
+    <Content Include="Scripts\components\ConvertedImages.js" />
     <Content Include="Scripts\components\ImagesUpload.js" />
-    <Content Include="Scripts\helpers\helpers.js" />
+    <Content Include="Scripts\helpers\generic.js" />
+    <Content Include="Scripts\helpers\actions.js" />
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\Styles\styles.css" />
     <Content Include="Scripts\external\tiff.min.js" />

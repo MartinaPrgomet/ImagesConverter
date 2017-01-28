@@ -1,5 +1,6 @@
-﻿import React, { Component } from "react";
-import { handleUploadImages, getPreview } from "../helpers/helpers"
+﻿import React, { Component } from "react"
+import { handleUploadImages, getPreview } from "../helpers/actions"
+import { downloadImage } from "../helpers/generic"
 
 class ImagesUpload extends Component {
     constructor() {
@@ -15,7 +16,7 @@ class ImagesUpload extends Component {
 
     handleUploadImages(e) {
         e.preventDefault(); 
-        const { images } = this.state;
+        const { images } = this.state
 
         handleUploadImages(images)
         .then(function(response) {
@@ -25,8 +26,8 @@ class ImagesUpload extends Component {
 
     readAndPreview(file) {
         if ( /\.(jpe?g|png|bmp|gif)$/i.test(file.name)) {
-            let reader = new FileReader();
-            let currentImages = this.state.images;
+            let reader = new FileReader()
+            let currentImages = this.state.images
 
             reader.onloadend = () => {
                 let newImage = {
@@ -34,16 +35,16 @@ class ImagesUpload extends Component {
                     imagePreviewUrl: reader.result
                 }
                 currentImages.push(newImage)
-                this.setState({ images: currentImages });
+                this.setState({ images: currentImages })
             }
 
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(file)
         }
     }
 
     onChange(e) {
         e.preventDefault();
-        let files = e.target.files;
+        let files = e.target.files
 
         if (files) {
             for(let i=0; i < files.length; i++) {
@@ -56,12 +57,7 @@ class ImagesUpload extends Component {
         const { tiffImageName } = this.state
 
         if(!tiffImageName) return
-
-        let path = "../../Content/Images/UploadedImages/";
-        let ext = ".tiff";
-        let tiffImageDownloadLink = path + tiffImageName + ext
-
-        window.open(tiffImageDownloadLink)
+        downloadImage(tiffImageName)
     }
 
     removePreviewAndShowForm() {
@@ -69,50 +65,48 @@ class ImagesUpload extends Component {
     }
 
     removeImage(index) {
-        let currentImages = this.state.images;
+        let currentImages = this.state.images
 
         for(let i = 0; i < currentImages.length; i++) {
             if(Object.keys(currentImages)[i] === String(index)) {
-                currentImages.splice(i, 1);
+                currentImages.splice(i, 1)
                 this.setState({ images: currentImages })
             }
         }
     }
 
     render() {
-        const { images, tiffImageName } = this.state;
+        const { images, tiffImageName } = this.state
         const preview = images.map((image, index) =>
             <div key={index} className="imagePreview">
                 <img src={image.imagePreviewUrl} className="previewContainer" />
                 <div><button onClick={() => this.removeImage(index)}>Remove</button></div>
             </div>
-        );
+        )
         const tiffImagePreview =  tiffImageName ? getPreview(tiffImageName) : null
 
         return (
-            <div className="base">
-                {!tiffImageName 
-                    ? <div>
-                        <div className="form">
-                            <form onSubmit={this.handleUploadImages}>
-                                <input name="image" type="file" multiple onChange={(e) => this.onChange(e)} />
-                                <input type="submit" value="Submit" />
-                            </form>
+            !tiffImageName 
+                ? <div>
+                    <div className="form">
+                        <form onSubmit={this.handleUploadImages}>
+                            <input name="image" type="file" multiple onChange={(e) => this.onChange(e)} />
+                            <input type="submit" value="Submit" />
+                        </form>
+                    </div>
+                    {preview}
+                    </div>
+                : <div>
+                    <div className="form">
+                        {tiffImageName && <button onClick={() => this.downloadImage()}>Download</button>}
+                        <div className="buttonConvert">
+                            <button onClick={() => this.removePreviewAndShowForm()}>Convert another image(s)</button>
                         </div>
-                        {preview}
-                      </div>
-                    : <div>
-                        <div className="form">
-                            {tiffImageName && <button onClick={() => this.downloadImage()}>Download</button>}
-                            <div className="buttonConvert">
-                                <button onClick={() => this.removePreviewAndShowForm()}>Convert another image(s)</button>
-                            </div>
-                        </div>
-                        <div id="tiffImagePreview" />
-                     </div>}
-             </div>
+                    </div>
+                    <div id="tiffImagePreview" />
+                </div>
         );
     }
 }
 
-export default ImagesUpload;
+export default ImagesUpload

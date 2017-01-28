@@ -1,7 +1,7 @@
-﻿import React from "react";
-import ReactDOM from "react-dom";
-import ImagesUpload from "./components/ImagesUpload.js";
+﻿import React, { Component } from "react"
+import ReactDOM from "react-dom"
+import App from "./components/App.js"
 
 ReactDOM.render(
-    <ImagesUpload />, document.getElementById("content")
+    <App />, document.getElementById("content")
 );

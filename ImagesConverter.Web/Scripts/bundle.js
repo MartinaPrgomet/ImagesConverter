@@ -54,13 +54,13 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _ImagesUpload = __webpack_require__(183);
+	var _App = __webpack_require__(183);
 
-	var _ImagesUpload2 = _interopRequireDefault(_ImagesUpload);
+	var _App2 = _interopRequireDefault(_App);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_reactDom2.default.render(_react2.default.createElement(_ImagesUpload2.default, null), document.getElementById("content"));
+	_reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById("content"));
 
 /***/ },
 /* 1 */
@@ -21809,7 +21809,109 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _helpers = __webpack_require__(184);
+	var _ImagesUpload = __webpack_require__(184);
+
+	var _ImagesUpload2 = _interopRequireDefault(_ImagesUpload);
+
+	var _ConvertedImages = __webpack_require__(188);
+
+	var _ConvertedImages2 = _interopRequireDefault(_ConvertedImages);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var App = function (_Component) {
+	    _inherits(App, _Component);
+
+	    function App() {
+	        _classCallCheck(this, App);
+
+	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+
+	        _this.showConvertedImagesList = _this.showConvertedImagesList.bind(_this);
+	        _this.showConvertForm = _this.showConvertForm.bind(_this);
+	        _this.state = { viewToLoad: null };
+	        return _this;
+	    }
+
+	    _createClass(App, [{
+	        key: "showConvertedImagesList",
+	        value: function showConvertedImagesList() {
+	            this.setState({ viewToLoad: "imagesList" });
+	        }
+	    }, {
+	        key: "showConvertForm",
+	        value: function showConvertForm() {
+	            this.setState({ viewToLoad: "convertForm" });
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            var _this2 = this;
+
+	            var viewToLoad = this.state.viewToLoad;
+
+
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "base" },
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "form" },
+	                    viewToLoad !== "imagesList" && _react2.default.createElement(
+	                        "button",
+	                        { onClick: function onClick() {
+	                                return _this2.showConvertedImagesList();
+	                            } },
+	                        "Show All Converted Images"
+	                    ),
+	                    viewToLoad !== "convertForm" && _react2.default.createElement(
+	                        "div",
+	                        { className: "buttonConvert" },
+	                        _react2.default.createElement(
+	                            "button",
+	                            { onClick: function onClick() {
+	                                    return _this2.showConvertForm();
+	                                } },
+	                            "Convert image(s)"
+	                        )
+	                    )
+	                ),
+	                viewToLoad === "imagesList" && _react2.default.createElement(_ConvertedImages2.default, null),
+	                viewToLoad === "convertForm" && _react2.default.createElement(_ImagesUpload2.default, null)
+	            );
+	        }
+	    }]);
+
+	    return App;
+	}(_react.Component);
+
+	exports.default = App;
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _actions = __webpack_require__(185);
+
+	var _generic = __webpack_require__(187);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21843,7 +21945,7 @@
 	            var images = this.state.images;
 
 
-	            (0, _helpers.handleUploadImages)(images).then(function (response) {
+	            (0, _actions.handleUploadImages)(images).then(function (response) {
 	                this.setState({ images: [], tiffImageName: response.Name });
 	            }.bind(this));
 	        }
@@ -21889,12 +21991,7 @@
 
 
 	            if (!tiffImageName) return;
-
-	            var path = "../../Content/Images/UploadedImages/";
-	            var ext = ".tiff";
-	            var tiffImageDownloadLink = path + tiffImageName + ext;
-
-	            window.open(tiffImageDownloadLink);
+	            (0, _generic.downloadImage)(tiffImageName);
 	        }
 	    }, {
 	        key: "removePreviewAndShowForm",
@@ -21940,54 +22037,50 @@
 	                    )
 	                );
 	            });
-	            var tiffImagePreview = tiffImageName ? (0, _helpers.getPreview)(tiffImageName) : null;
+	            var tiffImagePreview = tiffImageName ? (0, _actions.getPreview)(tiffImageName) : null;
 
-	            return _react2.default.createElement(
+	            return !tiffImageName ? _react2.default.createElement(
 	                "div",
-	                { className: "base" },
-	                !tiffImageName ? _react2.default.createElement(
+	                null,
+	                _react2.default.createElement(
 	                    "div",
-	                    null,
+	                    { className: "form" },
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "form" },
-	                        _react2.default.createElement(
-	                            "form",
-	                            { onSubmit: this.handleUploadImages },
-	                            _react2.default.createElement("input", { name: "image", type: "file", multiple: true, onChange: function onChange(e) {
-	                                    return _this3.onChange(e);
-	                                } }),
-	                            _react2.default.createElement("input", { type: "submit", value: "Submit" })
-	                        )
+	                        "form",
+	                        { onSubmit: this.handleUploadImages },
+	                        _react2.default.createElement("input", { name: "image", type: "file", multiple: true, onChange: function onChange(e) {
+	                                return _this3.onChange(e);
+	                            } }),
+	                        _react2.default.createElement("input", { type: "submit", value: "Submit" })
+	                    )
+	                ),
+	                preview
+	            ) : _react2.default.createElement(
+	                "div",
+	                null,
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "form" },
+	                    tiffImageName && _react2.default.createElement(
+	                        "button",
+	                        { onClick: function onClick() {
+	                                return _this3.downloadImage();
+	                            } },
+	                        "Download"
 	                    ),
-	                    preview
-	                ) : _react2.default.createElement(
-	                    "div",
-	                    null,
 	                    _react2.default.createElement(
 	                        "div",
-	                        { className: "form" },
-	                        tiffImageName && _react2.default.createElement(
+	                        { className: "buttonConvert" },
+	                        _react2.default.createElement(
 	                            "button",
 	                            { onClick: function onClick() {
-	                                    return _this3.downloadImage();
+	                                    return _this3.removePreviewAndShowForm();
 	                                } },
-	                            "Download"
-	                        ),
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "buttonConvert" },
-	                            _react2.default.createElement(
-	                                "button",
-	                                { onClick: function onClick() {
-	                                        return _this3.removePreviewAndShowForm();
-	                                    } },
-	                                "Convert another image(s)"
-	                            )
+	                            "Convert another image(s)"
 	                        )
-	                    ),
-	                    _react2.default.createElement("div", { id: "tiffImagePreview" })
-	                )
+	                    )
+	                ),
+	                _react2.default.createElement("div", { id: "tiffImagePreview" })
 	            );
 	        }
 	    }]);
@@ -21998,18 +22091,27 @@
 	exports.default = ImagesUpload;
 
 /***/ },
-/* 184 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.getAllConvertedImages = getAllConvertedImages;
 	exports.handleUploadImages = handleUploadImages;
 	exports.getPreview = getPreview;
 
-	__webpack_require__(185);
+	__webpack_require__(186);
+
+	function getAllConvertedImages() {
+	    return fetch('/api/images').then(function (response) {
+	        return response.json();
+	    }).catch(function (error) {
+	        console.log('error', error);
+	    });
+	}
 
 	function handleUploadImages(images) {
 	    var data = new FormData();
@@ -22050,7 +22152,7 @@
 	}
 
 /***/ },
-/* 185 */
+/* 186 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -22512,6 +22614,171 @@
 	  self.fetch.polyfill = true
 	})(typeof self !== 'undefined' ? self : this);
 
+
+/***/ },
+/* 187 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.formatDate = formatDate;
+	exports.downloadImage = downloadImage;
+	function formatDate(date) {
+	    var newDate = new Date(date);
+
+	    return newDate.toLocaleDateString();
+	}
+
+	function downloadImage(tiffImageName) {
+	    var path = "../../Content/Images/UploadedImages/";
+	    var ext = ".tiff";
+	    var tiffImageDownloadLink = path + tiffImageName + ext;
+
+	    window.open(tiffImageDownloadLink);
+	}
+
+/***/ },
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _actions = __webpack_require__(185);
+
+	var _generic = __webpack_require__(187);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ConvertedImages = function (_Component) {
+	    _inherits(ConvertedImages, _Component);
+
+	    function ConvertedImages() {
+	        _classCallCheck(this, ConvertedImages);
+
+	        var _this = _possibleConstructorReturn(this, (ConvertedImages.__proto__ || Object.getPrototypeOf(ConvertedImages)).call(this));
+
+	        _this.getConvertedImagesList = _this.getConvertedImagesList.bind(_this);
+	        _this.state = { images: [] };
+	        return _this;
+	    }
+
+	    _createClass(ConvertedImages, [{
+	        key: "componentWillMount",
+	        value: function componentWillMount() {
+	            (0, _actions.getAllConvertedImages)().then(function (response) {
+	                this.setState({ images: response });
+	            }.bind(this));
+	        }
+	    }, {
+	        key: "getConvertedImagesList",
+	        value: function getConvertedImagesList() {
+	            var images = this.state.images;
+
+
+	            return images.map(function (image, index) {
+	                return _react2.default.createElement(
+	                    "tr",
+	                    { key: index },
+	                    _react2.default.createElement(
+	                        "td",
+	                        null,
+	                        _react2.default.createElement(
+	                            "a",
+	                            { onClick: function onClick() {
+	                                    return (0, _generic.downloadImage)(image.Name);
+	                                } },
+	                            image.Name
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "td",
+	                        null,
+	                        (0, _generic.formatDate)(image.CreatedAt)
+	                    ),
+	                    _react2.default.createElement(
+	                        "td",
+	                        null,
+	                        image.Width,
+	                        " px"
+	                    ),
+	                    _react2.default.createElement(
+	                        "td",
+	                        null,
+	                        image.Height,
+	                        " px"
+	                    )
+	                );
+	            });
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            var images = this.state.images;
+
+
+	            return images ? _react2.default.createElement(
+	                "table",
+	                null,
+	                _react2.default.createElement(
+	                    "thead",
+	                    null,
+	                    _react2.default.createElement(
+	                        "tr",
+	                        null,
+	                        _react2.default.createElement(
+	                            "th",
+	                            null,
+	                            "Name"
+	                        ),
+	                        _react2.default.createElement(
+	                            "th",
+	                            null,
+	                            "Date"
+	                        ),
+	                        _react2.default.createElement(
+	                            "th",
+	                            null,
+	                            "Width"
+	                        ),
+	                        _react2.default.createElement(
+	                            "th",
+	                            null,
+	                            "Height"
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "tbody",
+	                    null,
+	                    this.getConvertedImagesList()
+	                )
+	            ) : _react2.default.createElement("div", null);
+	        }
+	    }]);
+
+	    return ConvertedImages;
+	}(_react.Component);
+
+	exports.default = ConvertedImages;
 
 /***/ }
 /******/ ]);
