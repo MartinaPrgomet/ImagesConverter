@@ -22,8 +22,8 @@ namespace ImagesConverter.Data.TestData
                 new ConvertedImage
                 {
                     Id          = 1,
-                    Name        = "TestName1",
-                    Path        = @"/Content/Images/TestImages/sample1.tiff",
+                    Name        = "sample1",
+                    Path        = @"/Content/Images/UploadedImages/sample1.tiff",
                     CreatedAt   = DateTime.Now,
                     Width       = 300,
                     Height      = 300
@@ -31,8 +31,8 @@ namespace ImagesConverter.Data.TestData
                 new ConvertedImage
                 {
                     Id          = 2,
-                    Name        = "TestName2",
-                    Path        = @"/Content/Images/TestImages/sample2.tiff",
+                    Name        = "sample1",
+                    Path        = @"/Content/Images/UploadedImages/sample1.tiff",
                     CreatedAt   = DateTime.Now,
                     Width       = 500,
                     Height      = 500
@@ -40,8 +40,8 @@ namespace ImagesConverter.Data.TestData
                 new ConvertedImage
                 {
                     Id          = 3,
-                    Name        = "TestName3",
-                    Path        = @"/Content/Images/TestImages/sample1.tiff",
+                    Name        = "sample1",
+                    Path        = @"/Content/Images/UploadedImages/sample1.tiff",
                     CreatedAt   = DateTime.Now,
                     Width       = 700,
                     Height      = 700

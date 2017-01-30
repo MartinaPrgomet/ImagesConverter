@@ -19,13 +19,6 @@ namespace ImagesConverter.Web.Controllers
             return model.GetAllImages();
         }
 
-        [HttpGet]
-        public ConvertedImage ImagesGetById(int id)
-        {
-            var model = new ImagesModel();
-            return model.GetOneImage(id);
-        }
-
         [HttpPost]
         public async Task<ConvertedImage> ImagesConvert()
         {

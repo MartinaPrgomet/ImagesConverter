@@ -20,25 +20,6 @@ namespace ImagesConverter.Web.Models
             return ConvertedImagesData;
         }
 
-        public ConvertedImage GetOneImage(int id)
-        {
-            var ConvertedImageData = new ConvertedImage();
-
-            using (var db = new ConvertedImagesContext())
-            {
-                var dbConvertedImage = db.ConvertedImages.First(x => x.Id == id);
-
-                ConvertedImageData.Id = dbConvertedImage.Id;
-                ConvertedImageData.Name = dbConvertedImage.Name;
-                ConvertedImageData.Path = dbConvertedImage.Path;
-                ConvertedImageData.Width = dbConvertedImage.Width;
-                ConvertedImageData.Height = dbConvertedImage.Height;
-                ConvertedImageData.CreatedAt = dbConvertedImage.CreatedAt;
-            }
-
-            return ConvertedImageData;
-        }
-
         public ConvertedImage CreateImage(string path, string name, int width, int height)
         {
             var ConvertedImageData = new ConvertedImage();

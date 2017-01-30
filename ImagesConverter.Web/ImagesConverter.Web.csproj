@@ -206,7 +206,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Images\UploadedImages\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\ReactConfig.cs" />
@@ -222,6 +221,7 @@
     <Compile Include="Services\ImagesConverterService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\UploadedImages\sample1.tiff" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\components\App.js" />

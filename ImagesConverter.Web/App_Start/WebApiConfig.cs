@@ -14,7 +14,6 @@ namespace ImagesConverter.Web
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute("ImagesGetAll", "api/images", new { controller = "ImagesApi", action = "ImagesGetAll" }, new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) });
-            config.Routes.MapHttpRoute("ImagesGetById", "api/images/{id}", new { controller = "ImagesApi", action = "ImagesGetById" });
             config.Routes.MapHttpRoute("ImagesConvert", "api/images", new { controller = "ImagesApi", action = "ImagesConvert" }, new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) });
         }
     }
